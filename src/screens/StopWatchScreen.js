@@ -1,21 +1,25 @@
-import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import { Text, StyleSheet, View, Button } from 'react-native';
 import { Stopwatch, Timer } from 'react-native-stopwatch-timer'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import StopWatchContainer from "../components/stopWatch/stopwatchContainer"
 
 const StopWatchScreen = () => {
 
   return (
-    <View>
-      <Text style={styles.textStyle}>Stop Watch</Text>
+    <View style={styles.container} >
+      <StopWatchContainer/>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container:{
+    backgroundColor:'#694966'
+  },
   textStyle: {
-
-    fontSize: 45
+    alignSelf:"center",
+    fontSize: 30
   },
 
 });
