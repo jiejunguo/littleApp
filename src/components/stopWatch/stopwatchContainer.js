@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Text, StyleSheet, View} from 'react-native';
+import { Text, StyleSheet, View, FlatList} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
@@ -8,12 +8,18 @@ const StopWatchContainer = () => {
     const[sec, setSec] =useState(0)
     const[msec, setMsec] =useState(0)
     const[start, setStart] = useState(false)
+    const[lap, setLap]=useState([])
     
     const padToTwo = (n) => n <= 9 ?`0${n}`:n
 
     const isToggle =()=>{
             setStart(n=>!n)
             
+    }
+
+    const isRecordLap = (min,sec,msec)=>{
+        console.log(lap)
+        setLap([...lap,`${padToTwo(min)}: ${padToTwo(sec)}: ${padToTwo(msec)}`])
     }
 
     useEffect(() => {
@@ -40,11 +46,11 @@ const StopWatchContainer = () => {
    
         
     const isReset =()=>{
-        console.log(start)
         setMsec(0),
         setSec(0),
         setMin(0),
-        setStart(false)
+        setStart(false),
+        setLap([])
     }
 
 
@@ -59,9 +65,12 @@ const StopWatchContainer = () => {
           <View style={styles.buttonContainer}>
               <TouchableOpacity style={styles.button} onPress={()=>{isReset()}}><Text style={styles.buttonText}>Reset</Text></TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={()=>{isToggle()}}><Text style={styles.buttonText}>{start ? 'Pause' : 'Start'}</Text></TouchableOpacity>
-              <TouchableOpacity style={styles.button} ><Text style={styles.buttonText}>Lap</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={()=>{isRecordLap(min,sec,msec)}}><Text style={styles.buttonText}>Lap</Text></TouchableOpacity>
           </View>
-       
+          <FlatList
+          data={lap}
+          renderItem={({ item }) => <Text style={styles.listText}>{item}</Text>}
+          />
       </View>
     )
 }
@@ -119,8 +128,21 @@ const StopWatchContainer = () => {
         alignSelf:"center",
         fontSize:20,
         color:"#CFAA69"
+    },
+    listContainer:{
+        flex: 1,
+    },
+    list:{
+        backgroundColor:"#214B71",
+        height:60,
+    },
+    listText:{
+        fontSize:20,
+        color:"#CFAA69",
+        backgroundColor:"#214B71",
+        height:30,
+        alignSelf:"center"
     }
-  
   });
   
   export default StopWatchContainer;

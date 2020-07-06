@@ -15,12 +15,8 @@ const StopWatchScreen = () => {
 
 const styles = StyleSheet.create({
   container:{
-    backgroundColor:'#694966'
-  },
-  textStyle: {
-    alignSelf:"center",
-    fontSize: 30
-  },
+    backgroundColor:"#214B71"
+  }
 
 });
 
