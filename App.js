@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import StopWatchScreen from "./src/screens/StopWatchScreen"
 import HomeScreen from "./src/screens/HomeScreen"
+import WeatherScreen from "./src/screens/WeatherScreen"
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,7 @@ function App() {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="StopWatch" component={StopWatchScreen} />
+        <Stack.Screen name="Weather" component={WeatherScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
