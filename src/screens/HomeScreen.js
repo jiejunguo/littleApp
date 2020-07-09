@@ -1,5 +1,9 @@
 import React from 'react';
-import { Text, StyleSheet, View, Button, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
+import AppButton from "../components/AppButton"
+import Row from "../components/CalculatorRow"
+
+
 
 function HomeScreen({ navigation }) {
   return (
@@ -7,12 +11,11 @@ function HomeScreen({ navigation }) {
       <View style={styles.headerContainer}>
       <Text style={styles.headerText}>Little Apps</Text>
       </View>
-      <View style={styles.optionContainer}>
       <View style= {styles.rowContainer}>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StopWatch')}><Text style={styles.buttonText}>1 Stop Watch</Text></TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Calculator')}><Text style={styles.buttonText}>2 Calculator</Text></TouchableOpacity>
-      </View>
-      
+      <Row>
+        <AppButton text="Stop Watch"  onPress={()=>navigation.navigate('StopWatch')}/>
+        <AppButton text="Calculator"  onPress={()=>navigation.navigate('Calculator')}/>
+      </Row>
       </View>
     </View>
   );
@@ -21,27 +24,20 @@ function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container:{
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor:"#f7faa0"
   },
   headerContainer:{
-    backgroundColor:"#214B71",
-    flex: 1,
-    flexDirection: 'row',
+    backgroundColor:"#62d1cc",
+    flex: 2,
     justifyContent: 'center',
-    alignItems: 'center'
   },
   headerText: {
     fontSize: 30,
     alignSelf:"center",
-    color:"#CFAA69"
-  },
-  optionContainer:{
-    flex: 1,
-    flexDirection:"column",
+    color:"#fff"
   },
   rowContainer:{
-    flex:1,
-    flexDirection:"row",
+    flex:5
   },
   button:{
     backgroundColor: "#214B71",
