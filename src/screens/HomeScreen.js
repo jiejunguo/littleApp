@@ -10,7 +10,7 @@ function HomeScreen({ navigation }) {
       <View style={styles.optionContainer}>
       <View style= {styles.rowContainer}>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StopWatch')}><Text style={styles.buttonText}>1 Stop Watch</Text></TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Weather')}><Text style={styles.buttonText}>2 Weather</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Calculator')}><Text style={styles.buttonText}>2 Calculator</Text></TouchableOpacity>
       </View>
       
       </View>
