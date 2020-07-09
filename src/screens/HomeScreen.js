@@ -16,6 +16,9 @@ function HomeScreen({ navigation }) {
         <AppButton text="Stop Watch"  onPress={()=>navigation.navigate('StopWatch')}/>
         <AppButton text="Calculator"  onPress={()=>navigation.navigate('Calculator')}/>
       </Row>
+      <Row>
+        <AppButton text="Weather" onPress={()=>navigation.navigate('Weather')}/>
+      </Row>
       </View>
     </View>
   );
