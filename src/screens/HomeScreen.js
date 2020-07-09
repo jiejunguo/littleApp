@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import AppButton from "../components/AppButton"
-import Row from "../components/CalculatorRow"
+import Row from "../components/Row"
 
 
 
@@ -38,20 +38,6 @@ const styles = StyleSheet.create({
   },
   rowContainer:{
     flex:5
-  },
-  button:{
-    backgroundColor: "#214B71",
-    flex: 1,
-    borderWidth:1,
-    borderRadius: 10,
-    borderColor:"#CFAA69",
-  },
-  buttonText:{
-    textAlign: "center",
-    textAlignVertical: 'center',
-    fontSize: 30,
-    alignSelf:"center",
-    color:"#CFAA69"
   }
 });
 

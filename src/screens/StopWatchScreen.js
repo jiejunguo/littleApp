@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import { Text, StyleSheet, View, FlatList} from 'react-native';
+import { Text, StyleSheet, View, FlatList, Dimensions} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+
+const screen= Dimensions.get("window");
+const ButtonWidth = screen.width/3;
 
 const StopWatchScreen = () => {
     const[min, setMin] =useState(0)
@@ -81,38 +84,38 @@ const StopWatchScreen = () => {
     container:{
       flex: 1,
       justifyContent: 'center',
-      backgroundColor:"#214B71",
+      backgroundColor:"#73d7f0",
       },
       titleContainer:{
-        flex:1
+        flex:1,
+        backgroundColor:"#73d7f0",
       },
       title:{
         marginTop:"10%",
-        backgroundColor:"#214B71",
-        color:"#CFAA69",
+        backgroundColor:"#73d7f0",
+        color:"#fff",
         fontSize:30,
-        alignSelf:"center"
+        alignSelf:"center",
+        height:screen.width/3
       },
-   
     timeContainer:{  
       flex:1,
-        flexDirection:"row",
+      flexDirection:"row",
         marginTop:"10%",
-       
-        borderColor:"#CFAA69",
-        backgroundColor:"#214B71",
+        borderColor:"#7628bf",
+        backgroundColor:"#299cd6",
         paddingLeft:"8%",
-        paddingRight:"8%",
+        paddingRight:"4%",
         paddingTop:".5%",
         paddingBottom:".5%",
         alignSelf:"center",
         borderWidth:2,
-        borderColor:"#CFAA69",
+        borderColor:"#fff",
         borderRadius: 10,
       },
     timeNumber:{
         fontSize:40,
-        color:"#CFAA69",
+        color:"#fff",
         height:50,
         width:60,
         alignSelf:"center"
@@ -121,36 +124,39 @@ const StopWatchScreen = () => {
     buttonContainer:{
       flex:1,
       flexDirection:"row",
-      justifyContent:"space-around",
       marginTop:"10%",
-      backgroundColor:"#214B71",
+      backgroundColor:"#299cd6",
     },
     button: {
-      backgroundColor:"#214B71",
-      paddingTop:"5%",
-      paddingBottom:"5%",
-      paddingLeft:"5%",
-      paddingRight:"5%",
-      height:60,
+      backgroundColor:"#299cd6",
+      width:screen.width/3,
+      height:ButtonWidth-65,
+      borderRadius:2,
+      justifyContent:"center",
+      borderWidth:1,
+      borderColor:"#73d7f0",
+
     },
     buttonText:{
         alignSelf:"center",
         fontSize:20,
-        color:"#CFAA69"
+        color:"#fff"
     },
     listContainer:{
+      marginTop:"10%",
         flex: 7,
+        backgroundColor:"#73d7f0"
     },
     list:{
-        backgroundColor:"#214B71",
-        height:60,
+        backgroundColor:"#73d7f0",
+        height:80,
     },
     listText:{
-        fontSize:20,
-        color:"#CFAA69",
-        backgroundColor:"#214B71",
-        height:30,
-        alignSelf:"center"
+        fontSize:30,
+        color:"#fff",
+        backgroundColor:"#73d7f0",
+        alignSelf:"center",
+        height:40
     }
   });
   

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import Row from "../components/CalculatorRow";
+import Row from "../components/Row";
 import Button from "../components/CalculatorButton"
 
 
@@ -103,7 +103,7 @@ const CalculatorScreen = () => {
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    backgroundColor:"#202020",
+    backgroundColor:"#1e4375",
   },
   textContainer:{
     flex:2,

@@ -28,7 +28,7 @@ export default ({onPress, text, size, theme}) => {
 
 const styles = StyleSheet.create({
     button:{
-        backgroundColor:"#333333",
+        backgroundColor:"#5dd5f0",
         flex:1,
         height:ButtonWidth-10,
         alignItems:"center",
@@ -44,16 +44,16 @@ const styles = StyleSheet.create({
     },
     text:{
         color:"#fff",
-        fontSize:25
+        fontSize:30
     },
     textSecondary:{
         color:"#060606"
     },
     buttonSecondary:{
-     backgroundColor:"#a6a6a6"
+     backgroundColor:"#1686db"
     },
     buttonAccent:{
-        backgroundColor:"#f09a36"
+        backgroundColor:"#633ba8"
     }
   })
 

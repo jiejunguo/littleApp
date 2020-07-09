@@ -19,7 +19,8 @@ export default ({onPress, text}) => {
             alignItems:"center",
             justifyContent:"center",
             borderRadius:5,
-            margin:1
+            borderColor:"#fff",
+            borderWidth:1
         },
         text:{
             color:"#fff",
