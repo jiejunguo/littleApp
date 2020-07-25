@@ -21,6 +21,7 @@ function HomeScreen({ navigation }) {
           />
         </Row>
         <Row>
+          <AppButton text="News" onPress={() => navigation.navigate("News")} />
           <AppButton
             text="Weather"
             onPress={() => navigation.navigate("Weather")}

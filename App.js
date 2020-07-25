@@ -6,6 +6,7 @@ import StopWatchScreen from "./src/screens/StopWatchScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import CalculatorScreen from "./src/screens/CalculatorScreen";
 import WeatherScreen from "./src/screens/WeatherScreen";
+import NewsScreen from "./src/screens/NewsScreen";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ function App() {
         <Stack.Screen name="StopWatch" component={StopWatchScreen} />
         <Stack.Screen name="Calculator" component={CalculatorScreen} />
         <Stack.Screen name="Weather" component={WeatherScreen} />
+        <Stack.Screen name="News" component={NewsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
