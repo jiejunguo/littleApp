@@ -32,8 +32,7 @@ const NewsScreen = () => {
 
   setTimeout(() => {
     setLoading(false);
-  }, 1000);
-
+  }, 5000);
   if (loading) {
     return <SplashScreen />;
   } else {
