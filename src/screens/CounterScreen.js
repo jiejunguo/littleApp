@@ -5,7 +5,7 @@ import AppButton from "../components/AppButton";
 
 const CounterScreen = () => {
     const [count, setCount] = useState("0");
-    const [number, onChangeNumber] = useState(null)
+    const [number, setNumber] = useState(null)
 
     return (
         <View style={styles.container}>
@@ -16,7 +16,7 @@ const CounterScreen = () => {
             <View style={styles.rowContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={onChangeNumber}
+                    onChangeText={setNumber}
                     value={number}
                     placeholder="Reset Number" />
 
@@ -24,18 +24,18 @@ const CounterScreen = () => {
 
                     <AppButton
                         text="Reset"
-                        onPress={() => setCount(prevCount => number)}
+                        onPress={() => setCount(number)}
                     />
 
                 </Row>
                 <Row>
                     <AppButton
                         text="-"
-                        onPress={() => setCount(prevCount => prevCount - 1)}
+                        onPress={() => setCount(count => count - 1)}
                     />
                     <AppButton
                         text="+"
-                        onPress={() => setCount(prevCount => prevCount + 1)}
+                        onPress={() => setCount(count => count + 1)}
                     />
                 </Row>
             </View>

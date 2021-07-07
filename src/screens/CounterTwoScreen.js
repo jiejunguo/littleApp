@@ -1,22 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import { Text, StyleSheet, View, TextInput } from "react-native";
 import Row from "../components/Row";
 import AppButton from "../components/AppButton";
 
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'increment':
+            return { ...state, count: state.count + action.payload };
+        case 'decrement':
+            return { ...state, count: state.count - action.payload };
+        case 'reset':
+            return { ...state, count: action.payload }
+        default:
+            return state;
+    }
+};
+
+
 const CounterScreen = () => {
-    const [count, setCount] = useState("0");
-    const [number, onChangeNumber] = useState(null)
+    const [state, dispatch] = useReducer(reducer, { count: 0 });
+    const [number, setNumber] = useState(null)
 
     return (
         <View style={styles.container}>
             <View style={styles.screen}>
-                <Text style={styles.screenText}>{count}</Text>
+                <Text style={styles.screenText}>Current Count: {state.count}</Text>
             </View >
 
             <View style={styles.rowContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={onChangeNumber}
+                    onChangeText={number => setNumber(number)}
                     value={number}
                     placeholder="Reset Number" />
 
@@ -24,18 +39,24 @@ const CounterScreen = () => {
 
                     <AppButton
                         text="Reset"
-                        onPress={() => setCount(prevCount => number)}
+                        onPress={() => {
+                            dispatch({ type: 'reset', payload: number })
+                        }}
                     />
 
                 </Row>
                 <Row>
                     <AppButton
                         text="-"
-                        onPress={() => setCount(prevCount => prevCount - 1)}
+                        onPress={() => {
+                            dispatch({ type: 'decrement', payload: 1 });
+                        }}
                     />
                     <AppButton
                         text="+"
-                        onPress={() => setCount(prevCount => prevCount + 1)}
+                        onPress={() => {
+                            dispatch({ type: 'increment', payload: 1 });
+                        }}
                     />
                 </Row>
             </View>
