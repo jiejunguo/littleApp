@@ -136,7 +136,7 @@ const CalculatorScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1e4375",
+    backgroundColor: "#000000",
   },
   textContainer: {
     flex: 2,

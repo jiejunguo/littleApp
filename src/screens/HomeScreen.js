@@ -27,6 +27,11 @@ function HomeScreen({ navigation }) {
             onPress={() => navigation.navigate("Weather")}
           />
         </Row>
+        <Row>
+          <AppButton text="Counter" onPress={() => navigation.navigate("Counter")} />
+          <AppButton text="Counter2" onPress={() => navigation.navigate("CounterTwo")} />
+
+        </Row>
       </View>
     </View>
   );
@@ -35,21 +40,21 @@ function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f7faa0",
+    backgroundColor: "#14213d",
   },
   headerContainer: {
-    backgroundColor: "#62d1cc",
+    backgroundColor: "#14213d",
     flex: 2,
     justifyContent: "center",
   },
   headerText: {
     fontSize: 30,
     alignSelf: "center",
-    color: "#fff",
+    color: "#e5e5e5",
   },
   rowContainer: {
     flex: 5,
-  },
+  }
 });
 
 export default HomeScreen;

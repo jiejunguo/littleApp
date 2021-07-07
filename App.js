@@ -6,6 +6,8 @@ import HomeScreen from "./src/screens/HomeScreen";
 import CalculatorScreen from "./src/screens/CalculatorScreen";
 import WeatherScreen from "./src/screens/WeatherScreen";
 import NewsScreen from "./src/screens/NewsScreen";
+import CounterScreen from "./src/screens/CounterScreen"
+import CounterTwoScreen from "./src/screens/CounterTwoScreen"
 
 const Stack = createStackNavigator();
 
@@ -18,6 +20,8 @@ function App() {
         <Stack.Screen name="Calculator" component={CalculatorScreen} />
         <Stack.Screen name="Weather" component={WeatherScreen} />
         <Stack.Screen name="News" component={NewsScreen} />
+        <Stack.Screen name="Counter" component={CounterScreen} />
+        <Stack.Screen name="CounterTwo" component={CounterTwoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -13,17 +13,17 @@ export default ({ onPress, text }) => {
 };
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#73d7f0",
+    backgroundColor: "#fca311",
     flex: 1,
     height: ButtonWidth + 20,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
-    borderColor: "#fff",
+    borderColor: "#e5e5e5",
     borderWidth: 1,
   },
   text: {
-    color: "#fff",
+    color: "#e5e5e5",
     fontSize: 25,
   },
 });
