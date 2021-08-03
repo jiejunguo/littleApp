@@ -3,6 +3,7 @@ import { Text, StyleSheet, View } from "react-native";
 import AppButton from "../components/AppButton";
 import Row from "../components/Row";
 
+
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
@@ -30,6 +31,10 @@ function HomeScreen({ navigation }) {
         <Row>
           <AppButton text="Counter" onPress={() => navigation.navigate("Counter")} />
           <AppButton text="Counter2" onPress={() => navigation.navigate("CounterTwo")} />
+
+        </Row>
+        <Row>
+          <AppButton text="Roll Dice" onPress={() => navigation.navigate("RollDice")} />
 
         </Row>
       </View>

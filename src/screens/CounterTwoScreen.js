@@ -11,7 +11,7 @@ const reducer = (state, action) => {
         case 'decrement':
             return { ...state, count: state.count - action.payload };
         case 'reset':
-            return { ...state, count: action.payload }
+            return { ...state, count: parseInt(action.payload) }
         default:
             return state;
     }
@@ -20,7 +20,7 @@ const reducer = (state, action) => {
 
 const CounterScreen = () => {
     const [state, dispatch] = useReducer(reducer, { count: 0 });
-    const [number, setNumber] = useState(null)
+    const [number, setNumber] = useState('0')
 
     return (
         <View style={styles.container}>
