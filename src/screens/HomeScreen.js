@@ -35,6 +35,7 @@ function HomeScreen({ navigation }) {
         </Row>
         <Row>
           <AppButton text="Roll Dice" onPress={() => navigation.navigate("RollDice")} />
+          <AppButton text="Currency Conversion" onPress={() => navigation.navigate("Currency")} />
 
         </Row>
       </View>

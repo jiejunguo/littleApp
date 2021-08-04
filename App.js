@@ -9,6 +9,7 @@ import NewsScreen from "./src/screens/NewsScreen";
 import CounterScreen from "./src/screens/CounterScreen"
 import CounterTwoScreen from "./src/screens/CounterTwoScreen"
 import RollDiceScreen from "./src/screens/RollDiceScreen"
+import CurrencyScreen from "./src/screens/CurrencyScreen"
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,8 @@ function App() {
         <Stack.Screen name="Counter" component={CounterScreen} />
         <Stack.Screen name="CounterTwo" component={CounterTwoScreen} />
         <Stack.Screen name="RollDice" component={RollDiceScreen} />
+        <Stack.Screen name="Currency" component={CurrencyScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
