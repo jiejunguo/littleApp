@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: "#14213d",
-    flex: 2,
+    flex: 1,
     justifyContent: "center",
   },
   headerText: {

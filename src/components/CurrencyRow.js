@@ -1,19 +1,24 @@
-import React, { useState } from 'react'
-import { View, TextInput, StyleSheet, } from 'react-native'
+import React from 'react'
+import { View, TextInput, StyleSheet } from 'react-native'
 import SelectDropdown from 'react-native-select-dropdown'
 
 
-const CurrencyRow = () => {
+
+const CurrencyRow = ({ options, onSelect }) => {
     const countries = ["USD", "RMB", "AUD"]
+
     return (
         <View style={styles.container}>
-            <TextInput maxFontSizeMultiplier="number" style={styles.input} />
-            <View style={styles.options}>
+
+            <TextInput style={styles.input} />
+
+            <View>
                 <SelectDropdown
-                    data={countries}
-                    onSelect={(selectedItem, index) => {
-                        console.log(selectedItem, index)
-                    }}
+                    defaultButtonText="Select an currency"
+                    buttonStyle={{ height: 50, width: 200, margin: 10, borderRadius: 3 }}
+                    buttonTextStyle={{}}
+                    data={options}
+                    onSelect={onSelect}
                     buttonTextAfterSelection={(selectedItem, index) => {
                         // text represented after item is selected
                         // if data array is an array of objects then return selectedItem.property to render after item is selected

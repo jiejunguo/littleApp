@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Pressable, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, Pressable, ImageBackground, KeyboardAvoidingView } from 'react-native'
 import Dice from '../components/Dice'
 
 const RollDiceScreen = () => {
@@ -15,7 +15,7 @@ const RollDiceScreen = () => {
 
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <ImageBackground style={styles.backgroundImage} source={require('../../assets/image/rollDiceBG.jpeg')} />
             <View style={styles.diceContainer}>
                 <Dice num={diceOne} /><Dice num={diceTwo} />
@@ -23,7 +23,7 @@ const RollDiceScreen = () => {
             <Pressable style={styles.button} onPress={() => roll()}>
                 <Text style={styles.buttonText}>Roll</Text>
             </Pressable>
-        </View >
+        </KeyboardAvoidingView >
     )
 }
 
