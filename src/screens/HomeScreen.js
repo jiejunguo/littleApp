@@ -38,6 +38,9 @@ function HomeScreen({ navigation }) {
           <AppButton text="Currency Conversion" onPress={() => navigation.navigate("Currency")} />
 
         </Row>
+        <Row>
+          <AppButton text="Focus Time" onPress={() => navigation.navigate("FocusTime")} />
+        </Row>
       </View>
     </View>
   );

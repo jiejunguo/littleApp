@@ -10,6 +10,7 @@ import CounterScreen from "./src/screens/CounterScreen"
 import CounterTwoScreen from "./src/screens/CounterTwoScreen"
 import RollDiceScreen from "./src/screens/RollDiceScreen"
 import CurrencyScreen from "./src/screens/CurrencyScreen"
+import FocusTimeScreen from "./src/screens/FocusTimeScreen"
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ function App() {
         <Stack.Screen name="CounterTwo" component={CounterTwoScreen} />
         <Stack.Screen name="RollDice" component={RollDiceScreen} />
         <Stack.Screen name="Currency" component={CurrencyScreen} />
+        <Stack.Screen name="FocusTime" component={FocusTimeScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>

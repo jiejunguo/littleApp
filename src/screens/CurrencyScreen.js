@@ -9,6 +9,9 @@ const CurrencyScreen = () => {
     const [options, setOptions] = useState([]);
     const [fromCurrency, setFromCurrency] = useState();
     const [toCurrency, setToCurrency] = useState()
+    const [fromCurrencyAmount, setFromCurrencyAmount] = useState()
+    const [toCurrencyAmount, setToCurrencyAmount] = useState()
+
 
     const getCurrencyRates = async () => {
         try {
@@ -17,10 +20,11 @@ const CurrencyScreen = () => {
             setData(json.rates);
             const options = Object.keys(json.rates)
             setOptions(options)
-            const fromCurrency = json.base
+            const baseCurrency = json.base
             setFromCurrency(fromCurrency)
-            const firstCurrency = options[0]
-            setToCurrency(firstCurrency)
+            setToCurrency(fromCurrency)
+            setFromCurrencyAmount("1")
+            setToCurrencyAmount("1")
         } catch (error) {
             console.error(error);
         } finally {
@@ -30,8 +34,14 @@ const CurrencyScreen = () => {
 
     useEffect(() => {
         getCurrencyRates();
-        console.log(fromCurrency, toCurrency)
-    }, []);
+        console.log(fromCurrency, fromCurrencyAmount, toCurrency, toCurrencyAmount)
+    }, [fromCurrencyAmount, toCurrencyAmount, fromCurrency, toCurrency]);
+
+
+    const fromCurrencyChangge = (input) => {
+        setFromCurrencyAmount(input)
+    }
+
 
 
     return (
@@ -41,13 +51,20 @@ const CurrencyScreen = () => {
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Currency</Text>
                     </View>
-                    <CurrencyRow options={options} onSelect={(selectedItem) => {
-                        setFromCurrency(selectedItem)
-                    }} />
+                    <CurrencyRow
+                        onChangeText={text => fromCurrencyChangge(text)}
+                        value={fromCurrencyAmount}
+                        options={options}
+                        onSelect={(selectedItem) => {
+                            setFromCurrency(selectedItem)
+                        }} />
                     <Text style={styles.text}>=</Text>
-                    <CurrencyRow options={options} onSelect={(selectedItem) => {
-                        setToCurrency(selectedItem)
-                    }} />
+                    <CurrencyRow
+                        value={toCurrencyAmount}
+                        options={options}
+                        onSelect={(selectedItem) => {
+                            setToCurrency(selectedItem)
+                        }} />
                 </View>
             )}
 

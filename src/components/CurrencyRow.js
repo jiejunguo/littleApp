@@ -4,17 +4,17 @@ import SelectDropdown from 'react-native-select-dropdown'
 
 
 
-const CurrencyRow = ({ options, onSelect }) => {
+const CurrencyRow = ({ options, onSelect, value, onChangeText }) => {
     const countries = ["USD", "RMB", "AUD"]
 
     return (
         <View style={styles.container}>
 
-            <TextInput style={styles.input} />
+            <TextInput style={styles.input} value={value} onChangeText={onChangeText} />
 
             <View>
                 <SelectDropdown
-                    defaultButtonText="Select an currency"
+                    defaultButtonText="EUR"
                     buttonStyle={{ height: 50, width: 200, margin: 10, borderRadius: 3 }}
                     buttonTextStyle={{}}
                     data={options}
