@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { RoundedButton } from '../../components/RoundedButton'
 
 
@@ -7,13 +7,13 @@ export const Timing = ({ onChangeTime }) => {
     return (
         <>
             <View style={styles.timingButton}>
-                <RoundedButton title={'10min'} size={75} onPress={() => onChangeTime(10)} />
+                <RoundedButton title={'5min'} size={90} onPress={() => onChangeTime(5)} />
             </View>
             <View style={styles.timingButton}>
-                <RoundedButton title={'15min'} size={75} onPress={() => onChangeTime(15)} />
+                <RoundedButton title={'10min'} size={90} onPress={() => onChangeTime(10)} />
             </View>
             <View style={styles.timingButton}>
-                <RoundedButton title={'20min'} size={75} onPress={() => onChangeTime(20)} />
+                <RoundedButton title={'30min'} size={90} onPress={() => onChangeTime(30)} />
             </View>
         </>
     )

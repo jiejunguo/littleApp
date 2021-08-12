@@ -10,7 +10,7 @@ import { Timing } from "./Timing";
 
 const DEFAULT_TIME = 0.1
 
-const Timer = ({ focusSubject, onTimerEnd }) => {
+const Timer = ({ focusSubject, onTimerEnd, clearSubject }) => {
     useKeepAwake()
 
     const [minutes, setMinutes] = useState(DEFAULT_TIME)
@@ -62,7 +62,7 @@ const Timer = ({ focusSubject, onTimerEnd }) => {
                 <Text style={styles.title}>Focusing on:</Text>
                 <Text style={styles.task}>{focusSubject}</Text>
             </View>
-            <View style={{ paddingTop: spacing.xxl }}>
+            <View style={{ paddingTop: spacing.xxl, marginHorizontal: 20, }}>
                 <ProgressBar progress={progress} color='#5E84E2' style={{ height: 10 }} />
             </View>
             <View style={styles.buttonWapper}>
@@ -73,6 +73,10 @@ const Timer = ({ focusSubject, onTimerEnd }) => {
                 {isStarted ? <RoundedButton title="pause" onPress={() => setIsStarted(false)} /> :
                     <RoundedButton title="start" onPress={() => setIsStarted(true)} />}
             </View>
+            <View style={styles.clearSubject}>
+                <RoundedButton title="-" size={50} onPress={() => clearSubject()} />
+            </View>
+
 
         </View>
     )
@@ -83,10 +87,12 @@ const styles = StyleSheet.create({
         flex: 1
     },
     title: {
+        fontSize: fontSizes.lg,
         color: colors.white,
         textAlign: "center"
     },
     task: {
+        fontSize: fontSizes.xl,
         color: colors.white,
         textAlign: 'center',
         fontWeight: 'bold'
@@ -104,6 +110,10 @@ const styles = StyleSheet.create({
         padding: spacing.xxl,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    clearSubject: {
+        paddingBottom: 25,
+        paddingLeft: 25,
     }
 })
 

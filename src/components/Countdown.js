@@ -18,14 +18,22 @@ export const Countdown = ({
             if (time === 0) {
                 // do more stuff here
                 clearInterval(interval.current)
-                onEnd()
+
                 return time
             }
             const timeLeft = time - 1000;
-            onProgress(timeLeft / minutesToMillis(minutes))
+            // below will cause render external item from internal
+            // onProgress(timeLeft / minutesToMillis(minutes))
             return timeLeft
         })
     }
+
+    useEffect(() => {
+        onProgress(millis / minutesToMillis(minutes))
+        if (millis === 0) {
+            onEnd()
+        }
+    }, [millis])
 
     useEffect(() => {
         setMillis(minutesToMillis(minutes))
@@ -46,17 +54,24 @@ export const Countdown = ({
     const minute = Math.floor(millis / 1000 / 60) % 60
     const seconds = Math.floor(millis / 1000) % 60
     return (
-        <Text style={styles.text}>{formatTime(minute)}:{formatTime(seconds)}</Text>
+        <View style={styles.container}>
+            <Text style={styles.text}>{formatTime(minute)}:{formatTime(seconds)}</Text>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'rgba(94, 132, 226, 0.3)',
+        borderWidth: 1,
+        borderColor: 'rgba(94, 132, 226, 0.1)',
+        borderRadius: 10,
+    },
     text: {
         fontSize: fontSizes.xxxxl,
         fontWeight: 'bold',
         color: colors.white,
         padding: spacing.lg,
-        backgroundColor: 'rgba(94, 132, 226, 0.3)'
 
     }
 })
