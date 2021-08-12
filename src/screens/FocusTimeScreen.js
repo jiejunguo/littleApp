@@ -8,13 +8,13 @@ import { spacing } from '../utils/sizes'
 
 
 const FocusTimeScreen = () => {
-    const [focusSubject, setFocusSubject] = useState('Gardening')
+    const [focusSubject, setFocusSubject] = useState(null)
 
 
     return (
         <View style={styles.container}>
             {focusSubject ?
-                <Timer focusSubject={focusSubject} />
+                <Timer focusSubject={focusSubject} onTimerEnd={() => setFocusSubject(null)} />
                 :
                 <Focus addSubject={setFocusSubject} />}
             <Text>{focusSubject}</Text>
