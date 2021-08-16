@@ -34,6 +34,9 @@ const CurrencyScreen = () => {
 
     useEffect(() => {
         getCurrencyRates();
+    }, [])
+
+    useEffect(() => {
         console.log(fromCurrency, fromCurrencyAmount, toCurrency, toCurrencyAmount)
     }, [fromCurrencyAmount, toCurrencyAmount, fromCurrency, toCurrency]);
 

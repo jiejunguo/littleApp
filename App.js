@@ -11,25 +11,14 @@ import CounterTwoScreen from "./src/screens/CounterTwoScreen"
 import RollDiceScreen from "./src/screens/RollDiceScreen"
 import CurrencyScreen from "./src/screens/CurrencyScreen"
 import FocusTimeScreen from "./src/screens/FocusTimeScreen"
+import { BottomTabNavigator } from "./src/navigation/BottomTabNavigator"
 
 const Stack = createStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="StopWatch" component={StopWatchScreen} />
-        <Stack.Screen name="Calculator" component={CalculatorScreen} />
-        <Stack.Screen name="Weather" component={WeatherScreen} />
-        <Stack.Screen name="News" component={NewsScreen} />
-        <Stack.Screen name="Counter" component={CounterScreen} />
-        <Stack.Screen name="CounterTwo" component={CounterTwoScreen} />
-        <Stack.Screen name="RollDice" component={RollDiceScreen} />
-        <Stack.Screen name="Currency" component={CurrencyScreen} />
-        <Stack.Screen name="FocusTime" component={FocusTimeScreen} />
-
-      </Stack.Navigator>
+      <BottomTabNavigator />
     </NavigationContainer>
   );
 }
