@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import StopWatchScreen from "../screens/StopWatchScreen";
-import HomeScreen from "../screens/HomeScreen";
+
 import CalculatorScreen from "../screens/CalculatorScreen";
 import WeatherScreen from "../screens/WeatherScreen";
 import NewsScreen from "../screens/NewsScreen";
@@ -67,7 +67,11 @@ const ToolsNavigator = () => {
       }}
     >
       <Stack.Screen name="Tool" component={ToolsScreen} />
-      <Stack.Screen name="StopWatch" component={StopWatchScreen} />
+      <Stack.Screen
+        name="StopWatch"
+        component={StopWatchScreen}
+        options={{ headerShown: true }}
+      />
       <Stack.Screen name="Calculator" component={CalculatorScreen} />
       <Stack.Screen name="Counter" component={CounterScreen} />
       <Stack.Screen name="CounterTwo" component={CounterTwoScreen} />

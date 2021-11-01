@@ -6,53 +6,42 @@ import {
   GamesNavigator,
   DiaryNavigator,
 } from "./StackNavigator";
-import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  FontAwesome,
+  MaterialIcons,
+} from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
 export const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          if (route.name === "Diary") {
+            return (
+              <MaterialCommunityIcons name="notebook" size={28} color={color} />
+            );
+          } else if (route.name === "Tools") {
+            return <FontAwesome name="calculator" size={24} color={color} />;
+          } else if (route.name === "Infos") {
+            return <FontAwesome name="newspaper-o" size={24} color={color} />;
+          } else if (route.name === "Games") {
+            return (
+              <MaterialIcons name="videogame-asset" size={30} color={color} />
+            );
+          }
+        },
+        tabBarActiveTintColor: "tomato",
+        tabBarInactiveTintColor: "gray",
         headerShown: false,
-      }}
+      })}
     >
-      <Tab.Screen
-        name="Explore"
-        component={DiaryNavigator}
-        options={{
-          tabBarIcon: () => <AntDesign name="home" size={24} color="black" />,
-        }}
-      />
-      <Tab.Screen
-        name="Tools"
-        component={ToolsNavigator}
-        options={{
-          tabBarIcon: () => (
-            <FontAwesome name="calculator" size={24} color="black" />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Infos"
-        component={InfoNavigator}
-        options={{
-          tabBarIcon: () => (
-            <FontAwesome name="newspaper-o" size={24} color="black" />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Games"
-        component={GamesNavigator}
-        options={{
-          tabBarIcon: () => (
-            <MaterialIcons name="videogame-asset" size={24} color="black" />
-          ),
-        }}
-      />
+      <Tab.Screen name="Diary" component={DiaryNavigator} />
+      <Tab.Screen name="Tools" component={ToolsNavigator} />
+      <Tab.Screen name="Infos" component={InfoNavigator} />
+      <Tab.Screen name="Games" component={GamesNavigator} />
     </Tab.Navigator>
   );
 };

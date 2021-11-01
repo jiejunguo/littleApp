@@ -1,3 +1,5 @@
 export const colors = {
-    white: '#fff'
-}
+  white: "#fff",
+  lightgreen: "#ccd5ae",
+  inkgreeen: "#606c38",
+};
