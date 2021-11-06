@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Text,
   StyleSheet,
@@ -7,6 +7,8 @@ import {
   ImageBackground,
   FlatList,
   Image,
+  SafeAreaView,
+  Linking,
 } from "react-native";
 
 const NewsScreen = () => {
@@ -64,29 +66,35 @@ const SplashScreen = () => {
 const HomeScreen = (props) => {
   return (
     <View>
-      <FlatList
-        data={props.articles}
-        renderItem={({ item }) => <ArticleItem article={item} />}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      <SafeAreaView style={{ alignItems: "center" }}>
+        <FlatList
+          data={props.articles}
+          renderItem={({ item }) => <ArticleItem article={item} />}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </SafeAreaView>
     </View>
   );
 };
 
 const ArticleItem = ({ article }) => {
   const { description, url, urlToImage } = article;
+  const URLPress = useCallback(async () => {
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert("Don't know how to open this URL");
+    }
+  }, []);
+
   return (
     <View style={styles.articleContainer}>
       <Image style={styles.articleImage} source={{ uri: urlToImage }} />
       <Text style={styles.articleTitle}>{article.title}</Text>
       <Text style={styles.articleDescription}>{description}</Text>
       <View style={styles.articleBtns}>
-        <Button
-          onPress={() => {
-            console.log("Button pressed!");
-          }}
-          title="Open"
-        />
+        <Button onPress={URLPress} title="Open" />
         <Button
           onPress={() => {
             console.log("Button pressed!");
@@ -103,10 +111,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "orange",
   },
   logoContainer: {
+    justifyContent: "center",
     alignItems: "center",
+    flex: 1,
   },
   logoText: {
     fontSize: 24,
@@ -128,21 +137,23 @@ const styles = StyleSheet.create({
   },
   articleContainer: {
     borderWidth: 0,
-    width: "100%",
-    padding: 5,
+    marginHorizontal: 20,
+    marginBottom: 10,
+    borderRadius: 20,
   },
   articleImage: {
     height: 200,
+    borderRadius: 10,
   },
   articleTitle: {
     textAlign: "center",
-    padding: 20,
+    paddingHorizontal: 20,
     fontSize: 17,
     color: "black",
     backgroundColor: "white",
   },
   articleDescription: {
-    fontSize: 17,
+    fontSize: 14,
     padding: 10,
     color: "black",
     backgroundColor: "white",
@@ -150,6 +161,8 @@ const styles = StyleSheet.create({
   articleBtns: {
     flexDirection: "row",
     backgroundColor: "white",
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
 });
 export default NewsScreen;

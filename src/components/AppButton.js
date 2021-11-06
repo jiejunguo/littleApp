@@ -1,21 +1,25 @@
 import React from "react";
 import { Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 
-const screen = Dimensions.get("window");
-const ButtonWidth = screen.width / 4;
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default ({ onPress, text }) => {
+const screen = Dimensions.get("window");
+const ButtonWidth = screen.width * 0.45;
+
+export default ({ onPress, text, bgcolor, iconName }) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity
+      style={{ ...styles.button, backgroundColor: bgcolor }}
+      onPress={onPress}
+    >
       <Text style={styles.text}>{text}</Text>
+      <MaterialCommunityIcons name={iconName} size={36} color="#e5e5e5" />
     </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#fca311",
     flex: 1,
-    height: 100,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
@@ -25,5 +29,6 @@ const styles = StyleSheet.create({
   text: {
     color: "#e5e5e5",
     fontSize: 25,
+    marginBottom: 20,
   },
 });

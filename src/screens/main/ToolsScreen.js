@@ -1,8 +1,8 @@
 import React from "react";
-import { Text, StyleSheet, View, SafeAreaView } from "react-native";
-import AppButton from "../components/AppButton";
-import Row from "../components/Row";
-import { colors } from "../utils/colors";
+import { Text, StyleSheet, View, SafeAreaView, ScrollView } from "react-native";
+import AppButton from "../../components/AppButton";
+import Row from "../../components/Row";
+import { colors } from "../../utils/colors";
 
 function ToolsScreen({ navigation }) {
   return (
@@ -11,35 +11,41 @@ function ToolsScreen({ navigation }) {
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Little Tools</Text>
         </View>
-        <View style={styles.rowContainer}>
-          <Row>
+        <ScrollView style={styles.rowContainer}>
+          <Row position="flex-start">
             <AppButton
+              bgcolor="#bc6c25"
+              iconName="watch-vibrate"
               text="Stop Watch"
               onPress={() => navigation.navigate("StopWatch")}
             />
+          </Row>
+          <Row position="flex-end">
             <AppButton
+              bgcolor="#3a86ff"
+              iconName="calculator-variant"
               text="Calculator"
               onPress={() => navigation.navigate("Calculator")}
             />
           </Row>
-          <Row>
+
+          <Row position="flex-start">
             <AppButton
+              bgcolor="#ff477e"
+              iconName="plus-minus"
               text="Counter"
-              onPress={() => navigation.navigate("Counter")}
-            />
-            <AppButton
-              text="Counter2"
               onPress={() => navigation.navigate("CounterTwo")}
             />
           </Row>
-          <Row>
+          <Row position="flex-end">
             <AppButton
+              bgcolor="#38b000"
+              iconName="account-clock"
               text="Focus Time"
               onPress={() => navigation.navigate("FocusTime")}
             />
           </Row>
-          <Row></Row>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   );
@@ -48,11 +54,10 @@ function ToolsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.lightgreen,
-    alignItems: "center",
+    backgroundColor: "#fefae0",
   },
   headerContainer: {
-    flex: 1,
+    padding: 30,
     justifyContent: "center",
   },
   headerText: {
@@ -60,10 +65,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: colors.inkgreeen,
   },
-  rowContainer: {
-    flex: 5,
-    width: "90%",
-  },
+  rowContainer: {},
 });
 
 export default ToolsScreen;

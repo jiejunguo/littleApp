@@ -6,7 +6,7 @@ const DiaryHomeScreen = () => {
     <View>
       <ImageBackground
         style={styles.backgroundImage}
-        source={require("../../assets/image/diarybackground.jpg")}
+        source={require("../../../assets/image/diarybackground.jpg")}
         resizeMode="cover"
       ></ImageBackground>
       <Text>Diary Home</Text>

@@ -63,70 +63,66 @@ const CalculatorScreen = () => {
         <Text style={styles.text}>{currVal}</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <Row>
+        <Row type="yes">
           <Button
             text="C"
             theme="secondary"
-            onPress={() => this.handleTap("clear")}
+            onPress={() => handleTap("clear")}
           />
           <Button
             text="+/-"
             theme="secondary"
-            onPress={() => this.handleTap("posneg")}
+            onPress={() => handleTap("posneg")}
           />
           <Button
             text="%"
             theme="secondary"
-            onPress={() => this.handleTap("percentage")}
+            onPress={() => handleTap("percentage")}
           />
           <Button
             text="/"
             theme="accent"
-            onPress={() => this.handleTap("operator", "/")}
+            onPress={() => handleTap("operator", "/")}
           />
         </Row>
-        <Row>
-          <Button text="7" onPress={() => this.handleTap("number", 7)} />
-          <Button text="8" onPress={() => this.handleTap("number", 8)} />
-          <Button text="9" onPress={() => this.handleTap("number", 9)} />
+        <Row type="yes">
+          <Button text="7" onPress={() => handleTap("number", 7)} />
+          <Button text="8" onPress={() => handleTap("number", 8)} />
+          <Button text="9" onPress={() => handleTap("number", 9)} />
           <Button
             text="X"
             theme="accent"
-            onPress={() => this.handleTap("operator", "*")}
+            onPress={() => handleTap("operator", "*")}
           />
         </Row>
-        <Row>
-          <Button text="4" onPress={() => this.handleTap("number", 4)} />
-          <Button text="5" onPress={() => this.handleTap("number", 5)} />
-          <Button text="6" onPress={() => this.handleTap("number", 6)} />
+        <Row type="yes">
+          <Button text="4" onPress={() => handleTap("number", 4)} />
+          <Button text="5" onPress={() => handleTap("number", 5)} />
+          <Button text="6" onPress={() => handleTap("number", 6)} />
           <Button
             text="-"
             theme="accent"
-            onPress={() => this.handleTap("operator", "-")}
+            onPress={() => handleTap("operator", "-")}
           />
         </Row>
-        <Row>
-          <Button text="1" onPress={() => this.handleTap("number", 1)} />
-          <Button text="2" onPress={() => this.handleTap("number", 2)} />
-          <Button text="3" onPress={() => this.handleTap("number", 3)} />
+        <Row type="yes">
+          <Button text="1" onPress={() => handleTap("number", 1)} />
+          <Button text="2" onPress={() => handleTap("number", 2)} />
+          <Button text="3" onPress={() => handleTap("number", 3)} />
           <Button
             text="+"
             theme="accent"
-            onPress={() => this.handleTap("operator", "+")}
+            onPress={() => handleTap("operator", "+")}
           />
         </Row>
         <Row>
           <Button
             text="0"
             size="double"
-            onPress={() => this.handleTap("number", 0)}
+            onPress={() => handleTap("number", 0)}
           />
-          <Button text="." onPress={() => this.handleTap("number", ".")} />
-          <Button
-            text="="
-            theme="accent"
-            onPress={() => this.handleTap("equal")}
-          />
+          <Button text="." onPress={() => handleTap("number", ".")} />
+          <Button text="=" theme="accent" onPress={() => handleTap("equal")} />
         </Row>
       </View>
     </View>

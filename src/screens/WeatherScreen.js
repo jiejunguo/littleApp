@@ -1,34 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { Text, StyleSheet, View, ImageBackground } from "react-native";
-import SearchBar from "../components/SearchBar";
+import {
+  Text,
+  StyleSheet,
+  View,
+  ImageBackground,
+  SafeAreaView,
+} from "react-native";
+import * as Location from "expo-location";
 import DateTime from "../components/DateTime";
+import WeatherScroll from "../components/WeatherScroll";
 
 const WeatherScreen = () => {
   const API_KEY = "d7dc9ece1b32cfe63cb78e07c84348a1";
-  const URL = `http://api.openweathermap.org/data/2.5/weather?q=Bellevue&appid=d7dc9ece1b32cfe63cb78e07c84348a1`;
-  // const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
   const [loading, setLoading] = useState(true);
   const [weather, setWeather] = useState([]);
+  const [data, setData] = useState();
 
   useEffect(() => {
-    fetch(URL)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        return responseJson;
-      })
-      .then((weather) => {
-        setWeather(weather);
-        setLoading(false);
-        console.log(weather, loading);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        fetchDataFromApi("40.7128", "-74.0060");
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      fetchDataFromApi(location.coords.latitude, location.coords.longitude);
+    })();
   }, []);
 
-  // setTimeout(() => {
-  //   setLoading(false);
-  // }, 5000);
+  const fetchDataFromApi = (latitude, longitude) => {
+    if (latitude && longitude) {
+      fetch(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data);
+          setLoading(false);
+        });
+    }
+  };
 
   const SplashScreen = () => {
     return (
@@ -48,39 +59,29 @@ const WeatherScreen = () => {
     );
   };
 
-  const HomeScreen = ({ weather }) => {
+  const HomeScreen = () => {
     return (
-      <View style={styles.container}>
+      <View style={{ flex: 1 }}>
         <ImageBackground
           style={styles.backgroundImage}
           source={require("../../assets/image/weatherBackground.jpeg")}
         >
-          <DateTime />
+          <SafeAreaView style={{ flex: 1 }}>
+            <DateTime
+              current={data.current}
+              lat={data.lat}
+              lon={data.lon}
+              timezone={data.timezone}
+            />
+            <WeatherScroll weatherData={data.daily} />
+          </SafeAreaView>
         </ImageBackground>
-
-        <Text>{weather.name}</Text>
-        <Text>{weather.sys.country}</Text>
-        <Text>{weather.main.temp}</Text>
-        <Text>{weather.main.temp_max}</Text>
-        <Text>{weather.main.temp_min}</Text>
-        <Text>{weather.weather[0].description}</Text>
       </View>
     );
   };
 
   return loading ? <SplashScreen /> : <HomeScreen weather={weather} />;
 };
-
-// return (
-//   <View>
-//     <SearchBar
-//       city={city}
-//       onTermChange={setCity}
-//       onTermSubmit={() => console.log("submitted")}
-//     />
-//     <Text>{city}</Text>
-//   </View>
-// );
 
 const styles = StyleSheet.create({
   container: {
@@ -89,7 +90,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logoContainer: {
+    justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
+    flex: 1,
   },
   logoText: {
     fontSize: 24,
@@ -105,9 +109,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    opacity: 0.7,
     resizeMode: "cover",
   },
   articleContainer: {

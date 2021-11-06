@@ -6,43 +6,50 @@ const screen = Dimensions.get("window");
 const ButtonWidth = screen.width / 3;
 
 const StopWatchScreen = () => {
-  const [min, setMin] = useState(0);
-  const [sec, setSec] = useState(0);
-  const [msec, setMsec] = useState(0);
+  const interval = React.useRef(null);
+  const [millis, setMillis] = useState(0);
+  const minute = Math.floor(millis / 1000 / 60) % 60;
+  const seconds = Math.floor(millis / 1000) % 60;
+
   const [start, setStart] = useState(false);
   const [lap, setLap] = useState([]);
 
-  const padToTwo = (n) => (n <= 9 ? `0${n}` : n);
+  const formatMillis = (mil) => {
+    const newMil = Math.floor((mil % 1000) / 10);
+    return formatTime(newMil);
+  };
+
+  const formatTime = (time) => (time < 10 ? `0${time}` : time);
+
+  const isRecordLap = (min, sec, msec) => {
+    setLap([
+      ...lap,
+      `${formatTime(min)}: ${formatTime(sec)}: ${formatMillis(msec)}`,
+    ]);
+  };
+
+  const count = () => {
+    setMillis((time) => {
+      const timeNew = time + 10;
+      return timeNew;
+    });
+  };
+
+  useEffect(() => {
+    if (start) {
+      interval.current = setInterval(count, 10);
+    } else if (!start && interval.current) {
+      clearInterval(interval.current);
+    }
+    return () => clearInterval(interval.current);
+  }, [start, millis]);
 
   const isToggle = () => {
     setStart((n) => !n);
   };
 
-  const isRecordLap = (min, sec, msec) => {
-    console.log(lap);
-    setLap([...lap, `${padToTwo(min)}: ${padToTwo(sec)}: ${padToTwo(msec)}`]);
-  };
-
-  useEffect(() => {
-    let id = null;
-    if (start) {
-      id = setInterval(() => {
-        if (msec !== 99) {
-          setMsec((n) => n + 1);
-        } else if (sec !== 59) {
-          setMsec(0), setSec((n) => n + 1);
-        } else {
-          setSec(0), setMsec(0), setMin((n) => n + 1);
-        }
-      }, 1);
-    } else if (!start && msec & sec & (min !== 0)) {
-      clearInterval(id);
-    }
-    return () => clearInterval(id);
-  }, [start, msec]);
-
   const isReset = () => {
-    setMsec(0), setSec(0), setMin(0), setStart(false), setLap([]);
+    setMillis(0), setStart(false), setLap([]);
   };
 
   return (
@@ -51,9 +58,9 @@ const StopWatchScreen = () => {
         <Text style={styles.title}>Stop Watch</Text>
       </View>
       <View style={styles.timeContainer}>
-        <Text style={styles.timeNumber}>{padToTwo(min)}:</Text>
-        <Text style={styles.timeNumber}>{padToTwo(sec)}:</Text>
-        <Text style={styles.timeNumber}>{padToTwo(msec)}</Text>
+        <Text style={styles.timeNumber}>{formatTime(minute)}:</Text>
+        <Text style={styles.timeNumber}>{formatTime(seconds)}:</Text>
+        <Text style={styles.timeNumber}>{formatMillis(millis)}</Text>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -75,7 +82,7 @@ const StopWatchScreen = () => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            isRecordLap(min, sec, msec);
+            isRecordLap(minute, seconds, millis);
           }}
         >
           <Text style={styles.buttonText}>Lap</Text>
@@ -84,8 +91,13 @@ const StopWatchScreen = () => {
       <View style={styles.listContainer}>
         <FlatList
           data={lap}
-          renderItem={({ item }) => (
-            <Text style={styles.listText}>{`lap   ${item}`}</Text>
+          renderItem={({ item, index }) => (
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ ...styles.listText, marginLeft: 20 }}>{`lap ${
+                index + 1
+              }`}</Text>
+              <Text style={styles.listText}>{item}</Text>
+            </View>
           )}
         />
       </View>
@@ -163,11 +175,11 @@ const styles = StyleSheet.create({
     height: 80,
   },
   listText: {
-    fontSize: 30,
+    fontSize: 20,
     color: "#fff",
-    backgroundColor: "#73d7f0",
     alignSelf: "center",
     height: 40,
+    flex: 1,
   },
 });
 
