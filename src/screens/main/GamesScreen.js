@@ -28,6 +28,14 @@ function GamesScreen({ navigation }) {
               onPress={() => navigation.navigate("NumberGuess")}
             />
           </Row>
+          <Row>
+            <AppButton
+              bgcolor="#48bfe3"
+              iconName="dice-6"
+              text="Tic Tac Toe"
+              onPress={() => navigation.navigate("TicTacToe")}
+            />
+          </Row>
         </View>
       </SafeAreaView>
     </View>

@@ -14,6 +14,7 @@ import CounterTwoScreen from "../screens/CounterTwoScreen";
 import RollDiceScreen from "../screens/RollDiceScreen";
 import CurrencyScreen from "../screens/CurrencyScreen";
 import FocusTimeScreen from "../screens/FocusTimeScreen";
+import TicTacToeScreen from "../screens/TicTacToeScreen";
 
 import NumberGuessScreen from "../screens/NumberGuessScreen";
 
@@ -41,6 +42,7 @@ const GamesNavigator = () => {
       <Stack.Screen name="game" component={GamesScreen} />
       <Stack.Screen name="RollDice" component={RollDiceScreen} />
       <Stack.Screen name="NumberGuess" component={NumberGuessScreen} />
+      <Stack.Screen name="TicTacToe" component={TicTacToeScreen} />
     </Stack.Navigator>
   );
 };
