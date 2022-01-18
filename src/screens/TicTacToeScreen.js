@@ -10,12 +10,15 @@ import {
   Alert,
 } from "react-native";
 import bg from "../../assets/image/bg.jpeg";
+
+const emptyMap = [
+  ["", "", ""], //1st row
+  ["", "", ""], //2nd row
+  ["", "", ""], //3rd row
+];
+
 const TicTacToeScreen = () => {
-  const [map, setMap] = useState([
-    ["", "", ""], //1st row
-    ["", "", ""], //2nd row
-    ["", "", ""], //3rd row
-  ]);
+  const [map, setMap] = useState(emptyMap);
   const [currentTurn, setCurrentTurn] = useState("x");
 
   const onPress = (rowIndex, columnIndex) => {
@@ -24,21 +27,127 @@ const TicTacToeScreen = () => {
       return;
     }
     setMap((existingMap) => {
-      const updateMap = [...existingMap];
-      updateMap[rowIndex][columnIndex] = currentTurn;
-      return updateMap;
+      existingMap[rowIndex][columnIndex] = currentTurn;
+      return existingMap;
     });
+    map[rowIndex][columnIndex] = currentTurn;
+
+    const winner = getWinner();
+    console.log(winner);
+    if (winner) {
+      gameWon(winner);
+    } else {
+      checkTieState();
+    }
+
     setCurrentTurn(currentTurn === "x" ? "o" : "x");
   };
+
+  const getWinner = () => {
+    //check rows
+    for (let i = 0; i < 3; i++) {
+      const isRowXWinning = map[i].every((cell) => cell === "x");
+      const isRowOWinning = map[i].every((cell) => cell === "o");
+      if (isRowXWinning) {
+        return "X";
+      }
+      if (isRowOWinning) {
+        return "O";
+      }
+    }
+    //check columns
+    //if o in last col, the app crash
+    for (let col = 0; col < 3; col++) {
+      let isColXWinning = true;
+      let isColOWinning = true;
+
+      for (let row = 0; row < 3; row++) {
+        if (map[row][col] !== "x") {
+          isColXWinning = false;
+        }
+        if (map[row][col] !== "o") {
+          isColOWinning = false;
+        }
+      }
+      if (isColXWinning) {
+        return "X";
+      }
+      if (isColOWinning) {
+        return "O";
+      }
+    }
+    //check diagonals
+    let isDiagonal1OWinning = true;
+    let isDiagonal1XWinning = true;
+    let isDiagonal2OWinning = true;
+    let isDiagonal2XWinning = true;
+    for (let i = 0; i < 3; i++) {
+      if (map[i][i] !== "o") {
+        isDiagonal1OWinning = false;
+      }
+      if (map[i][i] !== "x") {
+        isDiagonal1XWinning = false;
+      }
+      if (map[i][2 - i] !== "o") {
+        isDiagonal2OWinning = false;
+      }
+      if (map[i][2 - i] !== "x") {
+        isDiagonal2XWinning = false;
+      }
+    }
+    if (isDiagonal1OWinning || isDiagonal2OWinning) {
+      return "O";
+    }
+    if (isDiagonal1XWinning || isDiagonal2XWinning) {
+      return "X";
+    }
+  };
+
+  const checkTieState = () => {
+    console.log(map);
+    if (!map.some((row) => row.some((cell) => cell !== ""))) {
+      Alert.alert(`It's a tie`, `tie`, [
+        { text: "Restart", onPress: resetGame },
+      ]);
+    }
+  };
+
+  const gameWon = (player) => {
+    Alert.alert(`Huraay`, `Player ${player} won`, [
+      { text: "Restart", onPress: resetGame },
+    ]);
+  };
+
+  const resetGame = () => {
+    setMap([
+      ["", "", ""], //1st row
+      ["", "", ""], //2nd row
+      ["", "", ""], //3rd row
+    ]);
+    setCurrentTurn("x");
+  };
+
   return (
     <View style={styles.container}>
       {/* https://mehrankhandev.medium.com/understanding-resizemode-in-react-native-dd0e455ce63 */}
       <ImageBackground source={bg} style={styles.bg}>
+        <Text
+          style={{
+            fontSize: 24,
+            color: "white",
+            top: 100,
+            position: "absolute",
+          }}
+        >
+          Current Turn:{currentTurn.toUpperCase()}
+        </Text>
+
         <View style={styles.map}>
           {map.map((row, rowIndex) => (
-            <View style={styles.row}>
+            <View key={`row-${rowIndex}`} style={styles.row}>
               {row.map((cell, columnIndex) => (
                 <TouchableOpacity
+                  key={`row-${rowIndex}-col-${columnIndex}`}
                   onPress={() => onPress(rowIndex, columnIndex)}
                   style={styles.cell}
                 >
@@ -55,11 +164,6 @@ const TicTacToeScreen = () => {
               ))}
             </View>
           ))}
-          {/* <View style={styles.circle} />
-          <View style={styles.cross}>
-            <View style={styles.crossLine} />
-            <View style={[styles.crossLine, styles.crossLineReversed]} />
-          </View> */}
         </View>
       </ImageBackground>
       <StatusBar style="light" />
@@ -73,7 +177,7 @@ const styles = StyleSheet.create({
     backgroundColor: "yellow",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#303A3E",
+    backgroundColor: "#242D33",
   },
   bg: {
     width: "100%",
