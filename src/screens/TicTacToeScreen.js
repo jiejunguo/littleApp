@@ -1,15 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Pressable,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, ImageBackground, Alert } from "react-native";
 import bg from "../../assets/image/bg.jpeg";
+import Cell from "../features/TicTacToe/Cell";
 
 const emptyMap = [
   ["", "", ""], //1st row
@@ -146,21 +139,11 @@ const TicTacToeScreen = () => {
           {map.map((row, rowIndex) => (
             <View key={`row-${rowIndex}`} style={styles.row}>
               {row.map((cell, columnIndex) => (
-                <TouchableOpacity
+                <Cell
                   key={`row-${rowIndex}-col-${columnIndex}`}
+                  cell={cell}
                   onPress={() => onPress(rowIndex, columnIndex)}
-                  style={styles.cell}
-                >
-                  {cell === "o" && <View style={styles.circle} />}
-                  {cell === "x" && (
-                    <View style={styles.cross}>
-                      <View style={styles.crossLine} />
-                      <View
-                        style={[styles.crossLine, styles.crossLineReversed]}
-                      />
-                    </View>
-                  )}
-                </TouchableOpacity>
+                />
               ))}
             </View>
           ))}
@@ -207,32 +190,6 @@ const styles = StyleSheet.create({
     margin: 10,
     borderWidth: 12,
     borderColor: "white",
-  },
-  cross: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 5,
-  },
-  crossLine: {
-    position: "absolute",
-    width: 13,
-    height: "100%",
-    backgroundColor: "white",
-    borderRadius: 5,
-    // https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function
-    transform: [
-      {
-        rotate: "45deg",
-      },
-    ],
-  },
-  crossLineReversed: {
-    transform: [
-      {
-        rotate: "-45deg",
-      },
-    ],
   },
 });
 
