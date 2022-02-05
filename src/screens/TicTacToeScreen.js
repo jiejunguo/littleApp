@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ImageBackground, Alert } from "react-native";
 import bg from "../../assets/image/bg.jpeg";
 import Cell from "../features/TicTacToe/Cell";
@@ -10,9 +10,32 @@ const emptyMap = [
   ["", "", ""], //3rd row
 ];
 
+const copyArray = (original) => {
+  const copy = original.map((arr) => {
+    return arr.slice();
+  });
+  return copy;
+};
+
 const TicTacToeScreen = () => {
   const [map, setMap] = useState(emptyMap);
   const [currentTurn, setCurrentTurn] = useState("x");
+  const [gameMode, setGameMode] = useState("BOT_MEDIUM"); // LOCAL, BOT_EASY, BOT_MEDIUM
+
+  useEffect(() => {
+    if (currentTurn === "o" && gameMode !== "LOCAL") {
+      botTurn();
+    }
+  }, [currentTurn, gameMode]);
+
+  useEffect(() => {
+    const winner = getWinner(map);
+    if (winner) {
+      gameWon(winner);
+    } else {
+      //   checkTieState();
+    }
+  }, [map]);
 
   const onPress = (rowIndex, columnIndex) => {
     if (map[rowIndex][columnIndex] !== "") {
@@ -20,27 +43,18 @@ const TicTacToeScreen = () => {
       return;
     }
     setMap((existingMap) => {
+      const updatedMap = [...existingMap];
       existingMap[rowIndex][columnIndex] = currentTurn;
-      return existingMap;
+      return updatedMap;
     });
-    map[rowIndex][columnIndex] = currentTurn;
-
-    const winner = getWinner();
-    console.log(winner);
-    if (winner) {
-      gameWon(winner);
-    } else {
-      checkTieState();
-    }
-
     setCurrentTurn(currentTurn === "x" ? "o" : "x");
   };
 
-  const getWinner = () => {
+  const getWinner = (winnerMap) => {
     //check rows
     for (let i = 0; i < 3; i++) {
-      const isRowXWinning = map[i].every((cell) => cell === "x");
-      const isRowOWinning = map[i].every((cell) => cell === "o");
+      const isRowXWinning = winnerMap[i].every((cell) => cell === "x");
+      const isRowOWinning = winnerMap[i].every((cell) => cell === "o");
       if (isRowXWinning) {
         return "X";
       }
@@ -55,10 +69,10 @@ const TicTacToeScreen = () => {
       let isColOWinning = true;
 
       for (let row = 0; row < 3; row++) {
-        if (map[row][col] !== "x") {
+        if (winnerMap[row][col] !== "x") {
           isColXWinning = false;
         }
-        if (map[row][col] !== "o") {
+        if (winnerMap[row][col] !== "o") {
           isColOWinning = false;
         }
       }
@@ -75,16 +89,16 @@ const TicTacToeScreen = () => {
     let isDiagonal2OWinning = true;
     let isDiagonal2XWinning = true;
     for (let i = 0; i < 3; i++) {
-      if (map[i][i] !== "o") {
+      if (winnerMap[i][i] !== "o") {
         isDiagonal1OWinning = false;
       }
-      if (map[i][i] !== "x") {
+      if (winnerMap[i][i] !== "x") {
         isDiagonal1XWinning = false;
       }
-      if (map[i][2 - i] !== "o") {
+      if (winnerMap[i][2 - i] !== "o") {
         isDiagonal2OWinning = false;
       }
-      if (map[i][2 - i] !== "x") {
+      if (winnerMap[i][2 - i] !== "x") {
         isDiagonal2XWinning = false;
       }
     }
@@ -97,7 +111,6 @@ const TicTacToeScreen = () => {
   };
 
   const checkTieState = () => {
-    console.log(map);
     if (!map.some((row) => row.some((cell) => cell !== ""))) {
       Alert.alert(`It's a tie`, `tie`, [
         { text: "Restart", onPress: resetGame },
@@ -118,6 +131,55 @@ const TicTacToeScreen = () => {
       ["", "", ""], //3rd row
     ]);
     setCurrentTurn("x");
+  };
+
+  const botTurn = () => {
+    //collet all possible options
+    let possiblePositions = [];
+    map.forEach((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
+        if (cell === "") {
+          possiblePositions.push({ row: rowIndex, col: columnIndex });
+        }
+      });
+    });
+
+    // Attack
+    let chosenOption;
+
+    if (gameMode === "BOT_MEDIUM") {
+      possiblePositions.forEach((possiblePosition) => {
+        const mapCopy = copyArray(map);
+        mapCopy[possiblePosition.row][possiblePosition.col] = "o";
+
+        const winner = getWinner(mapCopy);
+        if (winner === "o") {
+          //Defend that position
+          chosenOption = possiblePosition;
+        }
+      });
+      //Defend
+      //Check if the opponent WINS if it takes one of the possible Positions
+
+      possiblePositions.forEach((possiblePosition) => {
+        const mapCopy = copyArray(map);
+        mapCopy[possiblePosition.row][possiblePosition.col] = "x";
+
+        const winner = getWinner(mapCopy);
+        if (winner === "x") {
+          //Defend that position
+          chosenOption = possiblePosition;
+        }
+      });
+    }
+    //choose random
+    if (!chosenOption) {
+      chosenOption =
+        possiblePositions[Math.floor(Math.random() * possiblePositions.length)];
+    }
+    if (chosenOption) {
+      onPress(chosenOption.row, chosenOption.col);
+    }
   };
 
   return (
@@ -148,6 +210,41 @@ const TicTacToeScreen = () => {
             </View>
           ))}
         </View>
+        <View style={styles.buttons}>
+          <Text
+            onPress={() => setGameMode("LOCAL")}
+            style={[
+              styles.button,
+              { backgroundColor: gameMode === "LOCAL" ? "#4F5686" : "#191F24" },
+            ]}
+          >
+            Local
+          </Text>
+          <Text
+            onPress={() => setGameMode("BOT_EASY")}
+            style={[
+              styles.button,
+              {
+                backgroundColor:
+                  gameMode === "BOT_EASY" ? "#4F5686" : "#191F24",
+              },
+            ]}
+          >
+            Easy Bot
+          </Text>
+          <Text
+            onPress={() => setGameMode("BOT_Medium")}
+            style={[
+              styles.button,
+              {
+                backgroundColor:
+                  gameMode === "BOT_Medium" ? "#4F5686" : "#191F24",
+              },
+            ]}
+          >
+            Medium Bot
+          </Text>
+        </View>
       </ImageBackground>
       <StatusBar style="light" />
     </View>
@@ -157,7 +254,7 @@ const TicTacToeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "yellow",
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#242D33",
@@ -183,13 +280,18 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 3,
   },
-  circle: {
-    width: "80%",
-    height: "80%",
-    borderRadius: 50,
+  buttons: {
+    position: "absolute",
+    bottom: 50,
+    flexDirection: "row",
+  },
+  button: {
+    color: "white",
     margin: 10,
-    borderWidth: 12,
-    borderColor: "white",
+    fontSize: 20,
+    backgroundColor: "black",
+    padding: 10,
+    paddingHorizontal: 15,
   },
 });
 
