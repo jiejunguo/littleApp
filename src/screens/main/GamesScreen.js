@@ -23,15 +23,15 @@ function GamesScreen({ navigation }) {
           <Row position="flex-end">
             <AppButton
               bgcolor="#ff4d6d"
-              iconName="cloud-question"
-              text="Number Guess"
-              onPress={() => navigation.navigate("NumberGuess")}
+              iconName="file-word-box"
+              text="Wordle"
+              onPress={() => navigation.navigate("Wordle")}
             />
           </Row>
           <Row>
             <AppButton
-              bgcolor="#48bfe3"
-              iconName="dice-6"
+              bgcolor="#52b788"
+              iconName="pound"
               text="Tic Tac Toe"
               onPress={() => navigation.navigate("TicTacToe")}
             />

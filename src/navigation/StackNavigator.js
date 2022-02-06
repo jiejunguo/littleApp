@@ -16,7 +16,7 @@ import CurrencyScreen from "../screens/CurrencyScreen";
 import FocusTimeScreen from "../screens/FocusTimeScreen";
 import TicTacToeScreen from "../screens/TicTacToeScreen";
 
-import NumberGuessScreen from "../screens/NumberGuessScreen";
+import WordleScreen from "../screens/WordleScreen";
 
 const Stack = createStackNavigator();
 
@@ -41,7 +41,7 @@ const GamesNavigator = () => {
     >
       <Stack.Screen name="game" component={GamesScreen} />
       <Stack.Screen name="RollDice" component={RollDiceScreen} />
-      <Stack.Screen name="NumberGuess" component={NumberGuessScreen} />
+      <Stack.Screen name="Wordle" component={WordleScreen} />
       <Stack.Screen name="TicTacToe" component={TicTacToeScreen} />
     </Stack.Navigator>
   );
