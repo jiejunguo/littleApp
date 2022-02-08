@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
   keyboard: {
     alignSelf: "stretch",
     marginTop: "auto",
+    marginBottom: 10,
   },
   row: {
     alignSelf: "stretch",

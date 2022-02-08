@@ -3,13 +3,35 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { colors } from "../utils/colors";
 import Keyboard from "../features/Wordle/Keyboard";
+import { color } from "react-native-reanimated";
+
+const NUMBER_OF_TRIES = 6;
 
 const WordleScreen = () => {
+  const word = "hello";
+  const letters = word.split(""); // ["h","e","l","l","o"]
+
+  const rows = new Array(NUMBER_OF_TRIES).fill(
+    new Array(letters.length).fill("a")
+  );
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
 
       <Text style={styles.title}>WORDLE</Text>
+
+      <View style={styles.map}>
+        {rows.map((row) => (
+          <View style={styles.row}>
+            {row.map((cell) => (
+              <View style={styles.cell}>
+                <Text style={styles.cellText}>{cell.toUpperCase()}</Text>
+              </View>
+            ))}
+          </View>
+        ))}
+      </View>
+
       <Keyboard />
     </SafeAreaView>
   );
@@ -27,12 +49,29 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 5,
   },
-  titleText: {
-    fontSize: 20,
-    fontWeight: "bold",
+  map: {
+    alignSelf: "stretch",
+    height: 100,
   },
-  buttonRow: {
-    flex: 0.5,
+  row: {
+    // alignSelf: "stretch",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  cell: {
+    borderWidth: 2,
+    borderColor: colors.darkgrey,
+    flex: 1,
+    aspectRatio: 1,
+    margin: 3,
+    maxWidth: 70,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cellText: {
+    color: colors.lightgrey,
+    fontWeight: "bold",
+    fontSize: 28,
   },
 });
 
