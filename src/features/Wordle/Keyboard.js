@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, StyleSheet, Dimensions } from "react-native";
-import { keys, ENTER, CLEAR } from "../../utils/keyboard";
+import { keys } from "../../utils/keyboard";
 import { colors } from "../../utils/colors";
 
 const screenWidth = Dimensions.get("window").width;
@@ -14,7 +14,7 @@ const Keyboard = ({
   greyCaps = [],
 }) => {
   const isLongButton = (key) => {
-    return key === ENTER || key === CLEAR;
+    return key === "ENTER" || key === "CLEAR";
   };
 
   const getKeyBGColor = (key) => {
