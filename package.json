@@ -15,6 +15,7 @@
     "@react-navigation/stack": "^5.14.7",
     "axios": "^0.19.2",
     "expo": "^42.0.0",
+    "expo-clipboard": "~1.1.0",
     "expo-keep-awake": "~9.2.0",
     "expo-location": "~12.1.2",
     "expo-status-bar": "~1.0.4",

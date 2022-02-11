@@ -1,6 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Alert,
+} from "react-native";
 import { colors } from "../utils/colors";
 import Keyboard from "../features/Wordle/Keyboard";
 
@@ -10,7 +17,7 @@ const copyArray = (arr) => {
 };
 
 const WordleScreen = () => {
-  const word = "mozart";
+  const word = "hello";
   const letters = word.split(""); // ["h","e","l","l","o"]
 
   const [rows, setRows] = useState(
@@ -18,8 +25,38 @@ const WordleScreen = () => {
   );
   const [curRow, setCurRow] = useState(0);
   const [curCol, setCurCol] = useState(0);
+  const [gameState, setGameState] = useState(""); //won, lost, playing
+
+  useEffect(() => {
+    if (curRow > 0) {
+      checkGameState();
+    }
+  }, [curRow]);
+
+  const checkGameState = () => {
+    if (checkIFWon()) {
+      Alert.alert("Huraaay", "You won!");
+      setGameState("won");
+    } else if (checkIFLost()) {
+      Alert.alert("Meh", "Try again tomorrow!");
+      setGameState("lost");
+    }
+  };
+
+  const checkIFWon = () => {
+    const row = rows[curRow - 1];
+
+    return row.every((each, i) => each === letters[i]);
+  };
+
+  const checkIFLost = () => {
+    return curRow === rows.length;
+  };
 
   const onKeyPressed = (key) => {
+    if (gameState !== "playing") {
+      return;
+    }
     const updatedRows = copyArray(rows);
 
     if (key === "CLEAR") {
