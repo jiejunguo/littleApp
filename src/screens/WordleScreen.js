@@ -8,8 +8,9 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
-import { colors } from "../utils/colors";
+import { colors, colorsToEmoji } from "../utils/colors";
 import Keyboard from "../features/Wordle/Keyboard";
+import * as Clipboard from "expo-clipboard";
 
 const NUMBER_OF_TRIES = 6;
 const copyArray = (arr) => {
@@ -17,7 +18,7 @@ const copyArray = (arr) => {
 };
 
 const WordleScreen = () => {
-  const word = "hello";
+  const word = "happy";
   const letters = word.split(""); // ["h","e","l","l","o"]
 
   const [rows, setRows] = useState(
@@ -25,7 +26,7 @@ const WordleScreen = () => {
   );
   const [curRow, setCurRow] = useState(0);
   const [curCol, setCurCol] = useState(0);
-  const [gameState, setGameState] = useState(""); //won, lost, playing
+  const [gameState, setGameState] = useState("playing"); //won, lost, playing
 
   useEffect(() => {
     if (curRow > 0) {
@@ -34,13 +35,26 @@ const WordleScreen = () => {
   }, [curRow]);
 
   const checkGameState = () => {
-    if (checkIFWon()) {
-      Alert.alert("Huraaay", "You won!");
+    if (checkIFWon() && gameState !== "won") {
+      Alert.alert("Huraaay", "You won!", [
+        { text: "Share", onPress: shareScore },
+      ]);
       setGameState("won");
-    } else if (checkIFLost()) {
+    } else if (checkIFLost() && gameState !== "lost") {
       Alert.alert("Meh", "Try again tomorrow!");
       setGameState("lost");
     }
+  };
+
+  const shareScore = () => {
+    const textShare = rows
+      .map((row, i) =>
+        row.map((cell, j) => colorsToEmoji[getCellBGColor(i, j)]).join("")
+      )
+      .filter((row) => row)
+      .join("\n");
+    Clipboard.setString(textShare);
+    Alert.alert("Copied Successfully", "Share your score on your social media");
   };
 
   const checkIFWon = () => {
@@ -50,7 +64,7 @@ const WordleScreen = () => {
   };
 
   const checkIFLost = () => {
-    return curRow === rows.length;
+    return !checkIFWon() && curRow === rows.length;
   };
 
   const onKeyPressed = (key) => {
