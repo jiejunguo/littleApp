@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import { colors, colorsToEmoji } from "../../utils/colors";
 import Keyboard from "./Keyboard";
 import * as Clipboard from "expo-clipboard";
 import { words } from "../../utils/wordlist";
+import { copyArray, getDayOfTheYear } from "../../utils/functions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const NUMBER_OF_TRIES = 6;
-const copyArray = (arr) => {
-  return [...arr.map((rows) => [...rows])];
-};
-
-const getDayOfTheYear = () => {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now - start;
-  const oneDay = 1000 * 60 * 60 * 24;
-  const day = Math.floor(diff / oneDay);
-  return day;
-};
 
 const dayOfTheYer = getDayOfTheYear();
 
 const Game = () => {
+  //   AsyncStorage.removeItem("@game");
   const word = words[dayOfTheYer];
   const letters = word.split(""); // ["h","e","l","l","o"]
 
@@ -31,12 +29,54 @@ const Game = () => {
   const [curRow, setCurRow] = useState(0);
   const [curCol, setCurCol] = useState(0);
   const [gameState, setGameState] = useState("playing"); //won, lost, playing
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (curRow > 0) {
       checkGameState();
     }
   }, [curRow]);
+
+  useEffect(() => {
+    persistState();
+  }, [rows, curCol, curRow, gameState]);
+
+  useEffect(() => {
+    readState();
+  }, []);
+
+  const persistState = async () => {
+    //write all the state variables in async storage
+    const data = {
+      rows,
+      curRow,
+      curCol,
+      gameState,
+    };
+    try {
+        const dataString = JSON.stringify(data);
+        // console.log("saving", dataString);
+    await AsyncStorage.setItem("@game", dataString);s
+    }catch(e){
+        console.log{"Failed to write data to async storage", e}
+    }
+    
+    
+  };
+
+  const readState = async () => {
+    const dataString = await AsyncStorage.getItem("@gmame");
+    try {
+      const data = JSON.parse(dataString);
+      setRows(data.row);
+      setCurCol(data.curCol);
+      setCurRow(data.curRow);
+      setGameState(data.gameState);
+    } catch (e) {
+      console.log("Couldn't parse the state");
+    }
+    setLoaded(true);
+  };
 
   const checkGameState = () => {
     if (checkIFWon() && gameState !== "won") {
@@ -129,6 +169,10 @@ const Game = () => {
   const greenCaps = getAllLettersWithColor(colors.primary);
   const yellowCaps = getAllLettersWithColor(colors.secondary);
   const greyCaps = getAllLettersWithColor(colors.darkgrey);
+
+  if (!loaded) {
+    return <ActivityIndicator />;
+  }
 
   console.log(greenCaps);
 
